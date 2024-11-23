@@ -1,0 +1,13 @@
+.btnlist {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.btn {
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.pict {
+    width: 1rem;
+}
