@@ -3,11 +3,36 @@
     gap: 0.75rem;
 }
 
+.card:hover {
+    transform: scale(1.10);
+}
+
 .btn {
+    background-color: #fffdfd;
+    border: 1px solid #ccc;
     border-radius: 8px;
     margin-top: 1rem;
 }
 
+.btn:hover {
+    transform: scale(1.25);
+}
+
 .pict {
     width: 1rem;
+}
+
+.btnsave:hover {
+    background-color: rgb(212, 248, 212);
+    border-color: rgb(212, 248, 212);
+}
+
+.btnedit:hover {
+    background-color: rgba(248, 248, 143, 0.753);
+    border-color: rgba(248, 248, 143, 0.753);
+}
+
+.btndel:hover {
+    background-color: rgba(253, 120, 120, 0.562);
+    border-color: rgba(253, 120, 120, 0.562);
 }

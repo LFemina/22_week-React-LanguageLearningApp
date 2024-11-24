@@ -1,10 +1,8 @@
 import './Header.css';
-import '../theme/theme-color.css';
-import '../theme/theme-font.css'
 
-const Header = () => {
+const Header = ({ style }) => {
     return (
-        <header className="header outer">
+        <header className="header" style={style}>
             <h1>Изучение иностранных языков</h1>
         </header>
     );

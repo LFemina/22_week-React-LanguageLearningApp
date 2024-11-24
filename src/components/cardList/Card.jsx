@@ -1,8 +1,5 @@
 import Buttons from "../buttons/Buttons";
 import "./Card.css";
-import '../theme/theme-color.css';
-import '../theme/theme-color.css';
-import '../theme/theme-animation.css';
 
 const Card = ({ word, transcription, translation, topic }) => {
     return (

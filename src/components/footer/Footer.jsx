@@ -1,11 +1,8 @@
 import './Footer.css';
-import '../theme/theme-color.css';
 
-
-
-const Footer = () => {
+const Footer = ({ style }) => {
     return (
-        <footer className="footer outer">
+        <footer className="footer" style={style}>
         <p>© 2024 LFemina</p>
     </footer>
     );

@@ -7,9 +7,9 @@ const words = [
     { word: 'Sister', transcription: 'ˈsistər', translation: 'Сестра', topic: 'Family'},
 ];
 
-const CardList = () => {
+const CardList = ({ style }) => {
     return (
-        <div className="card-list">
+        <div className="card-list" style={style}>
             {words.map((wordItem, index) => (
                 <Card
                     key={index}

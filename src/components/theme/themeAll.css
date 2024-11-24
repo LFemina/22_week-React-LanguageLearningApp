@@ -1,0 +1,7 @@
+:root {
+    --text-Header-Footer-color: #fff;
+    --bg-Header-Footer-color: #333;
+    --font-Header-Footer-family: "Pangolin", cursive;
+    --card-border: border: 1px solid #ccc;
+    --card-bg-color: #f9f9f9;
+}
