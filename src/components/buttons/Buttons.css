@@ -14,6 +14,17 @@
     margin-top: 1rem;
 }
 
+.btn_translate {
+    margin-bottom: 1rem;
+    color: green;
+    font-weight: bold;
+}
+
+.btn_translate:hover {
+    background-color: rgb(212, 248, 212);
+    border-color: rgb(212, 248, 212);
+}
+
 .btn:hover {
     transform: scale(1.25);
 }

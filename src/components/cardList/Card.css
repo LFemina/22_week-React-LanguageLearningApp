@@ -30,3 +30,8 @@
 .font_p {
     font-family: "Caveat", serif;;
 }
+
+.card .font_translate {
+    color: green;
+    font-weight: bold;
+}
