@@ -1,8 +1,10 @@
 import BtnEditLogo from './images/btnedit.svg';
 
-const BtnEdit = () => {
+const BtnEdit = ({ onClick }) => {
     return (
-        <button className='btn btnedit'><img src={BtnEditLogo} className='pict' alt='Edit'/></button>
+        <button className='btn btnedit' onClick={onClick}>
+            <img src={BtnEditLogo} className='pict' alt='Edit'/>
+        </button>
     );
 };
 

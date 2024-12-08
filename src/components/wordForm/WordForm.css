@@ -2,7 +2,7 @@ form {
     display: flex;
     gap: 1rem;
     margin-bottom: 3rem;
-    margin-right: 1.5rem;
+    margin-right: 2rem 1.5rem 3rem;
 }
 
 input {

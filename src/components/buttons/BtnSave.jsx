@@ -1,8 +1,10 @@
 import BtnSaveLogo from './images/btnsave.svg';
 
-const BtnSave = () => {
+const BtnSave = ({ onClick }) => {
     return (
-        <button className='btn btnsave'><img src={BtnSaveLogo} className='pict' alt='Save'/></button>
+        <button className='btn btnsave' onClick={onClick}>
+            <img src={BtnSaveLogo} className='pict' alt='Save'/>
+        </button>
     );
 };
 
