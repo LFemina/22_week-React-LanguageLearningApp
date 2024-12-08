@@ -4,7 +4,6 @@ import Footer from "./components/footer/Footer";
 import WordForm from "./components/wordForm/WordForm";
 import WordTable from "./components/wodsTable/WordTable";
 import Card from "./components/cardList/Card";
-
 import './App.css';
 import './components/theme/themeAll.css';
 
@@ -79,6 +78,7 @@ const App = () => {
           onChange={handleChange}
           formData={formData}
           isEditing={isEditing}
+          onClose={handleCancelEdit}
         />
         <WordTable
           words={words}

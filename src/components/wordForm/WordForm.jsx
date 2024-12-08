@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import BtnSave from '../buttons/BtnSave';
+import BtnClose from '../buttons/BtnClose';
 import './WordForm.css'
 import '../buttons/Buttons.css';
 
-const WordForm = ({ addWord, onChange, formData, isEditing }) => {
+const WordForm = ({ addWord, onChange, formData, isEditing, onClose }) => {
     return (
         <form onSubmit={addWord}>
             <div>
@@ -24,6 +25,7 @@ const WordForm = ({ addWord, onChange, formData, isEditing }) => {
             </div>
             <div className='btnlist'>
                 <BtnSave onClick={addWord} />
+                {isEditing && <BtnClose onClose={onClose} />}
             </div>
         </form>
     );
