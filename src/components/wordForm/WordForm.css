@@ -1,8 +1,8 @@
 form {
     display: flex;
     gap: 1rem;
-    margin-bottom: 3rem;
-    margin-right: 2rem 1.5rem 3rem;
+    margin: 3.5rem auto 3rem;
+    max-width: 1300px;
 }
 
 input {

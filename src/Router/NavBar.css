@@ -1,0 +1,29 @@
+.navbar {
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    height: var(--navbar-height);
+    background-color: white;
+    z-index: 890;
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+    font-family: "Pangolin", cursive;
+    font-size: larger;
+    font-size: 1.5rem;
+}
+
+.navbar a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 40px;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.active-link {
+    font-weight: bold;
+}

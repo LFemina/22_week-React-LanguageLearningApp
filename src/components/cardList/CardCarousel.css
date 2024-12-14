@@ -1,0 +1,36 @@
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    gap: 30px;
+}
+
+.carousel-button {
+    padding: 10px;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    background-color: #fffdfd;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-button:hover {
+    background-color: rgba(248, 248, 143, 0.753);
+    border-color: rgba(248, 248, 143, 0.753);
+    transform: scale(1.25);
+}
+
+.btn-pict {
+    width: 2rem;
+    height: auto;
+    margin: 0 5px;
+}
+
+.btn-pict-right {
+    width: 64px;
+    height: 54px;
+}

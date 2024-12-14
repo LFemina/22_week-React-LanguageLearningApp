@@ -1,22 +1,23 @@
 .card {
     border-radius: 8px;
-    padding: 16px;
+    padding: 4rem;
     box-shadow: 0 2px 4px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
-    flex: 0 1 250px;
+    flex: 0 1 400px;
     max-width: 300px;
-    padding: 2em;
+    min-height: 180px;
+    margin-top: -1.8125rem;
 }
 
 .card h2 {
     margin: 0;
-    font-size: 1.5em;
     color: #333;
 }
 
 .card p {
     margin: 4px 0;
     color: #666;
+    line-height: 1.5;
 }
 
 .card-list {
@@ -24,14 +25,19 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 50px;
+    flex: 1;
+    margin-top: 8rem;
+    margin-bottom: 16.969rem;
 }
 
 .font_h2 {
     font-family: "Hachi Maru Pop", serif;
+    font-size: 1.5rem;
 }
 
 .font_p {
-    font-family: "Caveat", serif;;
+    font-family: "Caveat", serif;
+    font-size: 1.1rem;
 }
 
 .card .font_translate {

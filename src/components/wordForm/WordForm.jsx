@@ -6,6 +6,7 @@ import '../buttons/Buttons.css';
 
 const WordForm = ({ addWord, onChange, formData, isEditing, onClose }) => {
     return (
+        <div className="container-table">
         <form onSubmit={addWord}>
             <div>
                 <label htmlFor="word">Английское слово:</label>
@@ -28,6 +29,7 @@ const WordForm = ({ addWord, onChange, formData, isEditing, onClose }) => {
                 {isEditing && <BtnClose onClose={onClose} />}
             </div>
         </form>
+        </div>
     );
 };
 
