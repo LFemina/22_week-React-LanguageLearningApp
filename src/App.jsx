@@ -4,7 +4,6 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import WordForm from "./components/wordForm/WordForm";
 import WordTable from "./components/wodsTable/WordTable";
-import Card from "./components/cardList/Card";
 import CardCarousel from "./components/cardList/CardCarousel";
 import NavBar from "./Router/NavBar";
 import Missing from "./Router/Missing";

@@ -1,3 +1,10 @@
+.card-game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .carousel {
     display: flex;
     align-items: center;
@@ -33,4 +40,12 @@
 .btn-pict-right {
     width: 64px;
     height: 54px;
+}
+
+.studied-count {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-family: "Hachi Maru Pop", serif;
+    font-weight: bold;
+    color: #333;
 }
