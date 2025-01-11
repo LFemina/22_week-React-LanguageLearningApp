@@ -21,3 +21,19 @@ input:focus {
     background-color: white;
     transform: scale(1.10)
 }
+
+.input-error-form {
+    border: 2px solid rgba(253, 120, 120, 0.562);
+}
+
+.input-error-form:hover {
+    border: 2px solid rgba(253, 120, 120, 0.562);
+}
+
+.error-message {
+    color: red;
+    font-weight: 500;
+    font-family: "Caveat", serif;
+    font-size: 1.3rem;
+    margin-top: -1.5625rem;
+}

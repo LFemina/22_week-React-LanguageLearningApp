@@ -34,14 +34,27 @@ const App = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const hasErrors = Object.values(formData).some(value => value.trim() === '');
+    if (hasErrors) {
+      setErrorMessage("Пожалуйста, заполните все поля формы!");
+      return;
+    } else {
+      setErrorMessage('');
+    }
+
     if(isEditing) {
       const updateWords = words.map((item, index) => index === editingIndex ? formData : item);
       setWords(updateWords);
+      console.log("Изменения сохранены:", formData);
       setIsEditing(false);
     } else {
       setWords([...words, formData]);
+      console.log("Новое слово добавлено:", formData);
     }
     setFormData({ word: '', transcription: '', translation: '', topic: ''});
   };
@@ -90,8 +103,10 @@ const App = () => {
                       addWord={handleSubmit}
                       onChange={handleChange}
                       formData={formData}
+                      setFormData={setFormData}
                       isEditing={isEditing}
                       onClose={handleCancelEdit}
+                      errorMessage={errorMessage}
                     />
                     <WordTable
                       words={words}
