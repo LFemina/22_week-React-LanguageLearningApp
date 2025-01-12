@@ -13,7 +13,7 @@ const WordForm = ({ addWord, onChange, formData, setFormData, isEditing, onClose
     });
 
     const handleChange = (event) => {
-        const { name, value } = event.target;;
+        const { name, value } = event.target;
         setFormData(prevFormData => ({
             ...prevFormData,
             [name]: value,

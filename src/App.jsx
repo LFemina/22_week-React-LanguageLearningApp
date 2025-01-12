@@ -48,9 +48,13 @@ const App = () => {
     }
 
     if(isEditing) {
+      const oldWord = words[editingIndex];
       const updateWords = words.map((item, index) => index === editingIndex ? formData : item);
       setWords(updateWords);
-      console.log("Изменения сохранены:", formData);
+      console.log("Изменения сохранены:", {
+        old: oldWord,
+        new: formData,
+      });
       setIsEditing(false);
     } else {
       setWords([...words, formData]);
@@ -131,7 +135,7 @@ const App = () => {
         <Footer style={headerFooterStyle} />
       </div>
     </Router>
-);
+  );
 };
 
 export default App;
