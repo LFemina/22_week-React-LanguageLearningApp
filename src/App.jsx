@@ -81,6 +81,7 @@ const App = () => {
     setIsEditing(false);
     setEditingIndex(null);
     setFormData({ word: '', transcription: '', translation: '', topic: ''});
+    setErrorMessage('');
   };
 
   const headerFooterStyle = {
