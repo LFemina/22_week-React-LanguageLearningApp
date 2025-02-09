@@ -12,19 +12,19 @@ import './components/theme/themeAll.css';
 
 const App = () => {
   const [words, setWords] = useState ([
-    { word: 'Father', transcription: 'ˈfäT͟Hər', translation: 'Отец', topic: 'Family'},
-    { word: 'Mother', transcription: 'ˈməT͟Hər', translation: 'Мать', topic: 'Family'},
-    { word: 'Brother', transcription: 'ˈbrəT͟Hər', translation: 'Брат', topic: 'Family'},
-    { word: 'Sister', transcription: 'ˈsistər', translation: 'Сестра', topic: 'Family'},
+    { english: 'Father', transcription: 'ˈfäT͟Hər', russian: 'Отец', tags: 'Family'},
+    { english: 'Mother', transcription: 'ˈməT͟Hər', russian: 'Мать', tags: 'Family'},
+    { english: 'Brother', transcription: 'ˈbrəT͟Hər', russian: 'Брат', tags: 'Family'},
+    { english: 'Sister', transcription: 'ˈsistər', russian: 'Сестра', tags: 'Family'},
 ]);
 
   const [editingIndex, setEditingIndex] = useState(null);
 
   const [formData, setFormData] = useState({
-    word: '',
+    english: '',
     transcription: '',
-    translation: '',
-    topic: '',
+    russian: '',
+    tags: '',
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -60,7 +60,7 @@ const App = () => {
       setWords([...words, formData]);
       console.log("Новое слово добавлено:", formData);
     }
-    setFormData({ word: '', transcription: '', translation: '', topic: ''});
+    setFormData({ english: '', transcription: '', russian: '', tags: ''});
   };
 
   const handleEditWord = (index) => {
@@ -80,7 +80,7 @@ const App = () => {
   const handleCancelEdit = () => {
     setIsEditing(false);
     setEditingIndex(null);
-    setFormData({ word: '', transcription: '', translation: '', topic: ''});
+    setFormData({ english: '', transcription: '', russian: '', tags: ''});
     setErrorMessage('');
   };
 
