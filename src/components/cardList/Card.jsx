@@ -8,7 +8,11 @@ const Card = ({ wordItem, showTranslation, onToggleTranslation  }) => {
         if (!showTranslation && ref.current) {
             ref.current.focus();
         }
-    }, [showTranslation, wordItem]);
+    }, [showTranslation]);
+
+    if (!wordItem) {
+        return <div className="card">Загрузка...</div>;
+    }
 
     return (
         <div className="card">
@@ -25,7 +29,7 @@ const Card = ({ wordItem, showTranslation, onToggleTranslation  }) => {
                     Показать перевод
                 </button>
             )}
-            <p className="font_p">Тема: {wordItem.tags}</p>
+            <p className="font_p">Тема: {wordItem.tags || 'Тема не указана'}</p>
         </div>
     );
 };

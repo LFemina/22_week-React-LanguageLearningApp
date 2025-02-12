@@ -44,11 +44,11 @@ export const handleChange = (formData, setFormData) => (e) => {
     setFormData({ ...formData, [name]: value });
 };
 
-export const handleSubmit = (words, setWords, formData, setFormData, isEditing, editingIndex, setIsEditing, setErrorMessage) => (e) => {
+export const handleSubmit = (words, setWords, formData, setFormData, isEditing, editingIndex, setIsEditing, setErrorMessage) => async (e) => {
     e.preventDefault();
 
     const hasErrors = Object.values(formData).some(value => value.trim() === '');
-    
+
     if (hasErrors) {
         console.error("Ошибка: Пожалуйста, заполните все поля формы!");
         setErrorMessage("Пожалуйста, заполните все поля формы!");
@@ -59,14 +59,55 @@ export const handleSubmit = (words, setWords, formData, setFormData, isEditing, 
 
     if (isEditing) {
         const oldWord = words[editingIndex];
-        const updateWords = words.map((item, index) => index === editingIndex ? formData : item);
-        setWords(updateWords);
-        console.log("Изменения сохранены:", { old: oldWord, new: formData });
-        setIsEditing(false);
+        const id = oldWord.id;
+        
+        try {
+            const response = await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/update`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Ошибка при обновлении слова');
+            }
+
+            const updatedWord = await response.json();
+            const updatedWords = words.map((item, index) => index === editingIndex ? updatedWord : item);
+            setWords(updatedWords);
+            console.log("Изменения сохранены:", { old: oldWord, new: updatedWord });
+            setIsEditing(false);
+
+        } catch (error) {
+            console.error("Ошибка:", error);
+            setErrorMessage(error.message || 'Ошибка при обновлении слова');
+        }
     } else {
-        setWords([...words, formData]);
-        console.log("Новое слово добавлено:", formData);
+        try {
+            const response = await fetch('http://itgirlschool.justmakeit.ru/api/words/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Ошибка при добавлении слова');
+            }
+
+            const newWord = await response.json();
+            setWords([...words, newWord]);
+            console.log("Новое слово добавлено:", newWord);
+
+        } catch (error) {
+            console.error("Ошибка:", error);
+            setErrorMessage(error.message || 'Ошибка при добавлении слова');
+        }
     }
+    
     setFormData({ english: '', transcription: '', russian: '', tags: '' });
 };
 
@@ -78,14 +119,32 @@ export const handleEditWord = (index, words, setEditingIndex, setFormData, setIs
 
 export const handleDeleteWord = (index, words, setWords, editingIndex, setIsEditing) => {
     const deletedWord = words[index];
+    const id = deletedWord.id;
     console.log("Удаляемое слово:", deletedWord);
 
-    const updateWords = words.filter((_, i) => i !== index);
-    setWords(updateWords);
+    const deleteWord = async () => {
+        try {
+            const response = await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, {
+                method: 'POST',
+            });
 
-    if (editingIndex === index) {
-        setIsEditing(false);
-    }
+            if (!response.ok) {
+                throw new Error('Ошибка при удалении слова');
+            }
+
+            const updatedWords = words.filter((_, i) => i !== index);
+            setWords(updatedWords);
+
+            if (editingIndex === index) {
+                setIsEditing(false);
+            }
+            console.log("Слово удалено:", deletedWord);
+        } catch (error) {
+            console.error("Ошибка:", error);
+        }
+    };
+
+    deleteWord();
 };
 
 export const handleCancelEdit = (setIsEditing, setEditingIndex, setFormData, setErrorMessage) => {

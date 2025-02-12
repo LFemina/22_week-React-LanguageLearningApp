@@ -29,6 +29,10 @@ const CardCarousel = ({ cards }) => {
         setTranslationVisible(prev => !prev);
     };
 
+    if (!cards || cards.length === 0) {
+        return <div className="card-game">Нет доступных слов для игры.</div>;
+    }
+
     return (
         <div className="card-game">
             <div className="carousel">
