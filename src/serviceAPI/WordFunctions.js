@@ -1,9 +1,43 @@
-export const initialWords = [
-    { english: 'Father', transcription: 'ˈfäT͟Hər', russian: 'Отец', tags: 'Family' },
-    { english: 'Mother', transcription: 'ˈməT͟Hər', russian: 'Мать', tags: 'Family' },
-    { english: 'Brother', transcription: 'ˈbrəT͟Hər', russian: 'Брат', tags: 'Family' },
-    { english: 'Sister', transcription: 'ˈsistər', russian: 'Сестра', tags: 'Family' },
-];
+import { useEffect, useState } from 'react';
+
+export const useWords = () => {
+    const [words, setWords] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchWords = async () => {
+            try {
+                const response = await fetch('http://itgirlschool.justmakeit.ru/api/words');
+                if (!response.ok) {
+                    throw new Error('Ошибка при загрузке слов');
+                }
+                const data = await response.json();
+                setWords(data);
+            } catch (error) {
+                setError(error.message);
+                console.error("Ошибка:", error);
+            }
+        };
+
+        fetchWords();
+    }, []);
+
+    const fetchWordById = async (id) => {
+        try {
+            const response = await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}`);
+            if (!response.ok) {
+                throw new Error(`Ошибка при загрузке слова с ID ${id}`);
+            }
+            const word = await response.json();
+            return word;
+        } catch (error) {
+            setError(error.message);
+            console.error("Ошибка:", error);
+        }
+    };
+
+    return { words, setWords, error, fetchWordById };
+};
 
 export const handleChange = (formData, setFormData) => (e) => {
     const { name, value } = e.target;
@@ -14,6 +48,7 @@ export const handleSubmit = (words, setWords, formData, setFormData, isEditing, 
     e.preventDefault();
 
     const hasErrors = Object.values(formData).some(value => value.trim() === '');
+    
     if (hasErrors) {
         console.error("Ошибка: Пожалуйста, заполните все поля формы!");
         setErrorMessage("Пожалуйста, заполните все поля формы!");
@@ -42,10 +77,12 @@ export const handleEditWord = (index, words, setEditingIndex, setFormData, setIs
 };
 
 export const handleDeleteWord = (index, words, setWords, editingIndex, setIsEditing) => {
-    const deleteWord = words[index];
-    console.log("Слово удалено:", deleteWord);
+    const deletedWord = words[index];
+    console.log("Удаляемое слово:", deletedWord);
+
     const updateWords = words.filter((_, i) => i !== index);
     setWords(updateWords);
+
     if (editingIndex === index) {
         setIsEditing(false);
     }
