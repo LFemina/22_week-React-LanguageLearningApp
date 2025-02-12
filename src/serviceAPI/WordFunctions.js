@@ -15,6 +15,7 @@ export const handleSubmit = (words, setWords, formData, setFormData, isEditing, 
 
     const hasErrors = Object.values(formData).some(value => value.trim() === '');
     if (hasErrors) {
+        console.error("Ошибка: Пожалуйста, заполните все поля формы!");
         setErrorMessage("Пожалуйста, заполните все поля формы!");
         return;
     } else {
@@ -41,6 +42,8 @@ export const handleEditWord = (index, words, setEditingIndex, setFormData, setIs
 };
 
 export const handleDeleteWord = (index, words, setWords, editingIndex, setIsEditing) => {
+    const deleteWord = words[index];
+    console.log("Слово удалено:", deleteWord);
     const updateWords = words.filter((_, i) => i !== index);
     setWords(updateWords);
     if (editingIndex === index) {
