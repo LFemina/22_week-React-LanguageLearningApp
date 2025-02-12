@@ -12,10 +12,10 @@ const Card = ({ wordItem, showTranslation, onToggleTranslation  }) => {
 
     return (
         <div className="card">
-            <h2 className="font_h2">{wordItem.word}</h2>
+            <h2 className="font_h2">{wordItem.english}</h2>
             <p className="font_p">Транскрипция: {wordItem.transcription}</p>
             {showTranslation ? (
-                <p className={`font_p font_translate`}>Перевод: {wordItem.translation}</p>
+                <p className={`font_p font_translate`}>Перевод: {wordItem.russian}</p>
             ) : (
                 <button
                     ref={ref}
@@ -25,7 +25,7 @@ const Card = ({ wordItem, showTranslation, onToggleTranslation  }) => {
                     Показать перевод
                 </button>
             )}
-            <p className="font_p">Тема: {wordItem.topic}</p>
+            <p className="font_p">Тема: {wordItem.tags}</p>
         </div>
     );
 };

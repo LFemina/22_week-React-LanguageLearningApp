@@ -19,10 +19,10 @@ const WordTable =({ words, onEdit, onDelete }) => {
                 <tbody>
                     {words.map((wordItem, index) =>(
                         <tr key={index}>
-                            <td>{wordItem.word}</td>
+                            <td>{wordItem.english}</td>
                             <td>{wordItem.transcription}</td>
-                            <td>{wordItem.translation}</td>
-                            <td>{wordItem.topic}</td>
+                            <td>{wordItem.russian}</td>
+                            <td>{wordItem.tags}</td>
                             <td>
                                 <div className="btnlist">
                                     <BtnEdit onClick={() => onEdit(index)} />

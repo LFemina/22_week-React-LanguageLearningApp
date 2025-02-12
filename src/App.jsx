@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { initialWords, handleChange, handleSubmit, handleEditWord, handleDeleteWord, handleCancelEdit } from './serviceAPI/WordFunctions';
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import WordForm from "./components/wordForm/WordForm";
@@ -11,78 +12,28 @@ import './App.css';
 import './components/theme/themeAll.css';
 
 const App = () => {
-  const [words, setWords] = useState ([
-    { word: 'Father', transcription: 'ˈfäT͟Hər', translation: 'Отец', topic: 'Family'},
-    { word: 'Mother', transcription: 'ˈməT͟Hər', translation: 'Мать', topic: 'Family'},
-    { word: 'Brother', transcription: 'ˈbrəT͟Hər', translation: 'Брат', topic: 'Family'},
-    { word: 'Sister', transcription: 'ˈsistər', translation: 'Сестра', topic: 'Family'},
-]);
-
-  const [editingIndex, setEditingIndex] = useState(null);
-
+  const [words, setWords] = useState(initialWords);
   const [formData, setFormData] = useState({
-    word: '',
+    english: '',
     transcription: '',
-    translation: '',
-    topic: '',
+    russian: '',
+    tags: '',
   });
-
   const [isEditing, setIsEditing] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
+  const [editingIndex, setEditingIndex] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onEdit = useCallback((index) => {
+    handleEditWord(index, words, setEditingIndex, setFormData, setIsEditing);
+  }, [words]);
 
-    const hasErrors = Object.values(formData).some(value => value.trim() === '');
-    if (hasErrors) {
-      setErrorMessage("Пожалуйста, заполните все поля формы!");
-      return;
-    } else {
-      setErrorMessage('');
-    }
+  const onDelete = useCallback((index) => {
+    handleDeleteWord(index, words, setWords, editingIndex, setIsEditing);
+  }, [words, editingIndex]);
 
-    if(isEditing) {
-      const oldWord = words[editingIndex];
-      const updateWords = words.map((item, index) => index === editingIndex ? formData : item);
-      setWords(updateWords);
-      console.log("Изменения сохранены:", {
-        old: oldWord,
-        new: formData,
-      });
-      setIsEditing(false);
-    } else {
-      setWords([...words, formData]);
-      console.log("Новое слово добавлено:", formData);
-    }
-    setFormData({ word: '', transcription: '', translation: '', topic: ''});
-  };
-
-  const handleEditWord = (index) => {
-    setEditingIndex(index);
-    setFormData(words[index]);
-    setIsEditing(true);
-  };
-
-  const handleDeleteWord = (index) => {
-    const updateWords = words.filter((_, i) => i !== index);
-    setWords(updateWords);
-    if (editingIndex === index) {
-      setIsEditing(false);
-    }
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-    setEditingIndex(null);
-    setFormData({ word: '', transcription: '', translation: '', topic: ''});
-    setErrorMessage('');
-  };
+  const onSubmit = useCallback((e) => {
+    handleSubmit(words, setWords, formData, setFormData, isEditing, editingIndex, setIsEditing, setErrorMessage)(e);
+  }, [words, formData, isEditing, editingIndex]);
 
   const headerFooterStyle = {
     color: 'var(--text-Header-Footer-color)',
@@ -105,18 +56,18 @@ const App = () => {
                 element={
                   <div>
                     <WordForm
-                      addWord={handleSubmit}
-                      onChange={handleChange}
+                      addWord={onSubmit}
+                      onChange={handleChange(formData, setFormData)}
                       formData={formData}
                       setFormData={setFormData}
                       isEditing={isEditing}
-                      onClose={handleCancelEdit}
+                      onClose={() => handleCancelEdit(setIsEditing, setEditingIndex, setFormData, setErrorMessage)}
                       errorMessage={errorMessage}
                     />
                     <WordTable
                       words={words}
-                      onDelete={handleDeleteWord}
-                      onEdit={handleEditWord}
+                      onDelete={onDelete}
+                      onEdit={onEdit}
                     />
                   </div>
                 }

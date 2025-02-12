@@ -6,10 +6,10 @@ import '../buttons/Buttons.css';
 
 const WordForm = ({ addWord, onChange, formData, setFormData, isEditing, onClose, errorMessage }) => {
     const [errors, setErrors] = useState({
-        word: false,
+        english: false,
         transcription: false,
-        translation: false,
-        topic: false,
+        russian: false,
+        tags: false,
     });
 
     const handleChange = (event) => {
@@ -30,10 +30,10 @@ const WordForm = ({ addWord, onChange, formData, setFormData, isEditing, onClose
 
     const validateFields = () => {
         return Object.values({
-            word: formData.word.trim() === '',
+            english: formData.english.trim() === '',
             transcription: formData.transcription.trim() === '',
-            translation: formData.translation.trim() === '',
-            topic: formData.topic.trim() === '',
+            russian: formData.russian.trim() === '',
+            tags: formData.tags.trim() === '',
         }).some(error => error);
     };
 
@@ -46,14 +46,14 @@ const WordForm = ({ addWord, onChange, formData, setFormData, isEditing, onClose
         <div className="container-table">
         <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="word">Английское слово:</label>
+                <label htmlFor="english">Английское слово:</label>
                     <input
                         type="text"
-                        name="word"
-                        value={formData.word}
+                        name="english"
+                        value={formData.english}
                         onChange={handleChange}
                         placeholder="Введите слово"
-                        className={(errorMessage && !formData.word.trim()) || (isEditing && errors.word) ? 'input-error-form' : ''}
+                        className={(errorMessage && !formData.english.trim()) || (isEditing && errors.english) ? 'input-error-form' : ''}
                     />
             </div>
             <div>
@@ -64,29 +64,29 @@ const WordForm = ({ addWord, onChange, formData, setFormData, isEditing, onClose
                         value={formData.transcription}
                         onChange={handleChange}
                         placeholder="Введите транскрипцию"
-                        className={(errorMessage && !formData.word.trim()) || (isEditing && errors.transcription) ? 'input-error-form' : ''}
+                        className={(errorMessage && !formData.transcription.trim()) || (isEditing && errors.transcription) ? 'input-error-form' : ''}
                     />
             </div>
             <div>
-                <label htmlFor="translation">Перевод:</label>
+                <label htmlFor="russian">Перевод:</label>
                     <input
                         type="text"
-                        name="translation"
-                        value={formData.translation}
+                        name="russian"
+                        value={formData.russian}
                         onChange={handleChange}
                         placeholder="Введите перевод"
-                        className={(errorMessage && !formData.word.trim()) || (isEditing && errors.translation) ? 'input-error-form' : ''}
+                        className={(errorMessage && !formData.russian.trim()) || (isEditing && errors.russian) ? 'input-error-form' : ''}
                     />
             </div>
             <div>
-                <label htmlFor="topic">Тема:</label>
+                <label htmlFor="tags">Тема:</label>
                     <input
                         type="text"
-                        name="topic"
-                        value={formData.topic}
+                        name="tags"
+                        value={formData.tags}
                         onChange={handleChange}
                         placeholder="Введите тему"
-                        className={(errorMessage && !formData.word.trim()) || (isEditing && errors.topic) ? 'input-error-form' : ''}
+                        className={(errorMessage && !formData.tags.trim()) || (isEditing && errors.tags) ? 'input-error-form' : ''}
                     />
             </div>
             <div className='btnlist'>
