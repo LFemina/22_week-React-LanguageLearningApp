@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { initialWords, handleChange, handleSubmit, handleEditWord, handleDeleteWord, handleCancelEdit } from './serviceAPI/WordFunctions';
+import { useWords, handleChange, handleSubmit, handleEditWord, handleDeleteWord, handleCancelEdit } from './serviceAPI/WordFunctions';
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import WordForm from "./components/wordForm/WordForm";
@@ -12,7 +12,7 @@ import './App.css';
 import './components/theme/themeAll.css';
 
 const App = () => {
-  const [words, setWords] = useState(initialWords);
+  const { words, setWords, error, fetchWordById } = useWords();
   const [formData, setFormData] = useState({
     english: '',
     transcription: '',
@@ -23,8 +23,14 @@ const App = () => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onEdit = useCallback((index) => {
-    handleEditWord(index, words, setEditingIndex, setFormData, setIsEditing);
+  const onEdit = useCallback(async (index) => {
+    const word = words[index];
+    if (word) {
+        const fetchedWord = await fetchWordById(word.id);
+        setFormData(fetchedWord);
+        setEditingIndex(index);
+        setIsEditing(true);
+    }
   }, [words]);
 
   const onDelete = useCallback((index) => {
