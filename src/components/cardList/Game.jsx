@@ -1,9 +1,9 @@
-import React from "react";
-import { useWords } from "../../serviceAPI/WordFunctions";
+import React, { useContext } from "react";
+import { WordsContext } from "../wordsContext/WordsContext";
 import CardCarousel from "./CardCarousel";
 
 const Game = () => {
-    const { words, error } = useWords();
+    const { words, error } = useContext(WordsContext);
 
     if (error) {
         return <div>Произошла ошибка: {error}</div>;

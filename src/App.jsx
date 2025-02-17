@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useWords, handleChange, handleSubmit, handleEditWord, handleDeleteWord, handleCancelEdit } from './serviceAPI/WordFunctions';
+import { useWords } from "./components/wordsContext/WordsContext";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import WordForm from "./components/wordForm/WordForm";
@@ -12,34 +12,40 @@ import './App.css';
 import './components/theme/themeAll.css';
 
 const App = () => {
-  const { words, setWords, error, fetchWordById } = useWords();
-  const [formData, setFormData] = useState({
-    english: '',
-    transcription: '',
-    russian: '',
-    tags: '',
-  });
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
+  const {
+    words,
+    setWords,
+    error,
+    fetchWordById,
+    handleChange,
+    handleSubmit,
+    handleDeleteWord,
+    handleCancelEdit,
+    formData,
+    setFormData,
+    isEditing,
+    setIsEditing,
+    editingIndex,
+    errorMessage,
+    setErrorMessage,
+  } = useWords();
 
   const onEdit = useCallback(async (index) => {
     const word = words[index];
     if (word) {
-        const fetchedWord = await fetchWordById(word.id);
-        setFormData(fetchedWord);
-        setEditingIndex(index);
-        setIsEditing(true);
+      const fetchedWord = await fetchWordById(word.id);
+      setFormData(fetchedWord);
+      setIsEditing(true);
     }
-  }, [words]);
+  }, [words, fetchWordById, setFormData, setIsEditing]);
 
   const onDelete = useCallback((index) => {
-    handleDeleteWord(index, words, setWords, editingIndex, setIsEditing);
-  }, [words, editingIndex]);
+    handleDeleteWord(index);
+  }, [handleDeleteWord]);
 
   const onSubmit = useCallback((e) => {
-    handleSubmit(words, setWords, formData, setFormData, isEditing, editingIndex, setIsEditing, setErrorMessage)(e);
-  }, [words, formData, isEditing, editingIndex]);
+    handleSubmit(e);
+  }, [handleSubmit]);
 
   const headerFooterStyle = {
     color: 'var(--text-Header-Footer-color)',
@@ -63,11 +69,10 @@ const App = () => {
                   <div>
                     <WordForm
                       addWord={onSubmit}
-                      onChange={handleChange(formData, setFormData)}
+                      onChange={handleChange}
                       formData={formData}
-                      setFormData={setFormData}
                       isEditing={isEditing}
-                      onClose={() => handleCancelEdit(setIsEditing, setEditingIndex, setFormData, setErrorMessage)}
+                      onClose={() => handleCancelEdit()}
                       errorMessage={errorMessage}
                     />
                     <WordTable

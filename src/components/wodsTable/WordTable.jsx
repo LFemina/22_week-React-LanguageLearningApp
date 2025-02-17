@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import WordsContext from '../wordsContext/WordsContext';
 import BtnEdit from "../buttons/BtnEdit";
 import BtnDel from "../buttons/BtnDel";
 import "./Table.css";
 
-const WordTable =({ words, onEdit, onDelete }) => {
+const WordTable = () => {
+    const { words, onEdit, onDelete } = useContext(WordsContext);
+
     return (
         <div>
             <table className="word-table">

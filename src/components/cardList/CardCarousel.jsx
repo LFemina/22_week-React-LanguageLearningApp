@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Card from "./Card";
 import BtnRight from "./CarouselBtn/right.svg";
 import BtnLeft from "./CarouselBtn/left.svg";
+import WordsContext from '../wordsContext/WordsContext';
 import "./CardCarousel.css";
 
-const CardCarousel = ({ cards }) => {
+const CardCarousel = () => {
+    const { words } = useContext(WordsContext);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [translationVisible, setTranslationVisible] = useState(false);
     const [studiedCount, setStudiedCount] = useState(0);
     const [studiedCards, setStudiedCards] = useState(new Set());
 
     const handleNext = () => {
-        setCurrentIndex(prev => Math.min(prev + 1, cards.length - 1));
+        setCurrentIndex(prev => Math.min(prev + 1, words.length - 1));
         setTranslationVisible(false);
     };
 
@@ -29,7 +31,7 @@ const CardCarousel = ({ cards }) => {
         setTranslationVisible(prev => !prev);
     };
 
-    if (!cards || cards.length === 0) {
+    if (!words || words.length === 0) {
         return <div className="card-game">Нет доступных слов для игры.</div>;
     }
 
@@ -44,14 +46,14 @@ const CardCarousel = ({ cards }) => {
                     <img src={BtnLeft} className="btn-pict" alt="Назад" />
                 </button>
                 <Card
-                    wordItem={cards[currentIndex]}
+                    wordItem={words[currentIndex]}
                     showTranslation={translationVisible}
                     onToggleTranslation={toggleTranslation}
                 />
                 <button
                     onClick={handleNext}
                     className="carousel-button btn-pict btn-pict-right"
-                    disabled={currentIndex === cards.length - 1}
+                    disabled={currentIndex === words.length - 1}
                 >
                     <img src={BtnRight} className="btn-pict" alt="Вперед" />
                 </button>
