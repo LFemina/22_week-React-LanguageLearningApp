@@ -35,18 +35,21 @@ const WordForm = () => {
     };
 
     const validateFields = () => {
-        return Object.values({
+        const errors = {
             english: formData.english.trim() === '',
             transcription: formData.transcription.trim() === '',
             russian: formData.russian.trim() === '',
             tags: formData.tags.trim() === '',
-        }).some(error => error);
+        };
+        return Object.values(errors).some(error => error);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!validateFields()) {
-            addWord(formData);
+            addWord(event);
+        } else {
+            console.log("Ошибка валидации, форма не отправлена.");
         }
     };
 

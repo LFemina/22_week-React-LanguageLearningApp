@@ -49,11 +49,15 @@ export const WordsProvider = ({ children }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(`Изменение поля ${name}: ${value}`);
+
         setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Данные формы перед отправкой:", formData);
+        
         const hasErrors = Object.values(formData).some(value => value.trim() === '');
         if (hasErrors) {
             console.error("Ошибка: Пожалуйста, заполните все поля формы!");
@@ -146,6 +150,10 @@ export const WordsProvider = ({ children }) => {
         handleEditWord(index);
     }, [handleEditWord]);
 
+    const onDelete = useCallback((index) => {
+        handleDeleteWord(index);
+    }, [handleDeleteWord]);
+
     return (
         <WordsContext.Provider value={{
             words,
@@ -153,7 +161,7 @@ export const WordsProvider = ({ children }) => {
             error,
             fetchWordById,
             handleChange,
-            handleSubmit,
+            addWord: handleSubmit,
             handleEditWord,
             handleDeleteWord,
             isEditing,
@@ -164,6 +172,7 @@ export const WordsProvider = ({ children }) => {
             errorMessage,
             handleCancelEdit,
             onEdit,
+            onDelete,
         }}>
             {children}
         </WordsContext.Provider>
