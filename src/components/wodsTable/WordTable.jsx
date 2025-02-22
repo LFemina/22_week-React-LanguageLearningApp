@@ -1,9 +1,13 @@
 import React from "react";
 import BtnEdit from "../buttons/BtnEdit";
 import BtnDel from "../buttons/BtnDel";
+import { observer } from "mobx-react";
+import WordStore from "../../WordStore";
 import "./Table.css";
 
-const WordTable =({ words, onEdit, onDelete }) => {
+const WordTable = observer(() => {
+    const { words } = WordStore;
+
     return (
         <div>
             <table className="word-table">
@@ -17,7 +21,7 @@ const WordTable =({ words, onEdit, onDelete }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {words.map((wordItem, index) =>(
+                    {words.map((wordItem, index) => (
                         <tr key={index}>
                             <td>{wordItem.english}</td>
                             <td>{wordItem.transcription}</td>
@@ -25,8 +29,8 @@ const WordTable =({ words, onEdit, onDelete }) => {
                             <td>{wordItem.tags}</td>
                             <td>
                                 <div className="btnlist">
-                                    <BtnEdit onClick={() => onEdit(index)} />
-                                    <BtnDel onClick={() => onDelete(index)} />
+                                    <BtnEdit onClick={() => WordStore.onEdit(index)} />
+                                    <BtnDel onClick={() => WordStore.onDelete(index)} />
                                 </div>
                             </td>
                         </tr>
@@ -35,6 +39,6 @@ const WordTable =({ words, onEdit, onDelete }) => {
             </table>
         </div>
     );
-};
+});
 
 export default WordTable;
