@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useContext } from "react";
-import WordsContext from '../wordsContext/WordsContext';
+import React, { useEffect, useRef } from "react";
 import "./Card.css";
 
-const Card = ({ wordItem, showTranslation  }) => {
+const Card = ({ wordItem, showTranslation, onToggleTranslation  }) => {
     const ref = useRef(null);
-    const { toggleTranslation } = useContext(WordsContext);
 
     useEffect(() => {
         if (!showTranslation && ref.current) {
@@ -26,7 +24,7 @@ const Card = ({ wordItem, showTranslation  }) => {
                 <button
                     ref={ref}
                     className="btn btn_translate font_p"
-                    onClick={() => toggleTranslation(wordItem.id)}
+                    onClick={() => onToggleTranslation(wordItem.id)}
                 >
                     Показать перевод
                 </button>

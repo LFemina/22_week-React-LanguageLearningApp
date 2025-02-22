@@ -132,7 +132,7 @@ export const WordsProvider = ({ children }) => {
             if (!response.ok) {
                 throw new Error('Ошибка при удалении слова');
             }
-
+            
             const updatedWords = words.filter((_, i) => i !== index);
             setWords(updatedWords);
             console.log("Слово удалено:", deletedWord);
