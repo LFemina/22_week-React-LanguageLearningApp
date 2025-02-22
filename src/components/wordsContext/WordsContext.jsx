@@ -128,9 +128,11 @@ export const WordsProvider = ({ children }) => {
             const response = await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, {
                 method: 'POST',
             });
+
             if (!response.ok) {
                 throw new Error('Ошибка при удалении слова');
             }
+
             const updatedWords = words.filter((_, i) => i !== index);
             setWords(updatedWords);
             console.log("Слово удалено:", deletedWord);
@@ -167,9 +169,11 @@ export const WordsProvider = ({ children }) => {
             isEditing,
             setIsEditing,
             editingIndex,
+            setEditingIndex,
             formData,
             setFormData,
             errorMessage,
+            setErrorMessage,
             handleCancelEdit,
             onEdit,
             onDelete,

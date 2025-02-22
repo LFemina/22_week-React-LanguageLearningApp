@@ -13,6 +13,7 @@ const WordForm = () => {
         isEditing,
         handleCancelEdit,
         errorMessage,
+        setErrorMessage,
     } = useContext(WordsContext);
 
     const [errors, setErrors] = useState({
@@ -48,8 +49,10 @@ const WordForm = () => {
         event.preventDefault();
         if (!validateFields()) {
             addWord(event);
+            setErrorMessage('');
         } else {
-            console.log("Ошибка валидации, форма не отправлена.");
+            setErrorMessage("Пожалуйста, заполните все поля формы!");
+            console.error("Пожалуйста, заполните все поля формы!");
         }
     };
 
