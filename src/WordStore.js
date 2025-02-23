@@ -128,26 +128,38 @@ class WordStore {
         }
     }
 
-    async deleteWord(id) {
-        try {
-            const deletedWord = this.words.find(word => word.id === id);
-            if (!deletedWord) {
-                console.error("Слово не найдено для удаления:", id);
-                return;
-            }
-    
-            const response = await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, {
-                method: 'POST',
-            });
-            if (!response.ok) {
-                throw new Error('Ошибка при удалении слова');
-            }
-            
-            this.setWords(this.words.filter(word => word.id !== id));
-            console.log("Слово удалено:", deletedWord);
-        } catch (error) {
-            console.error("Ошибка:", error);
+    handleDeleteWord(index) {
+        const deletedWord = this.words[index];
+        if (!deletedWord) {
+            console.error("Слово не найдено для удаления.");
+            return;
         }
+
+        const id = deletedWord.id;
+        console.log("Удаляемое слово:", JSON.parse(JSON.stringify(deletedWord)));
+
+        const deleteWord = async () => {
+            try {
+                const response = await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, {
+                    method: 'POST',
+                });
+                if(!response.ok) {
+                    throw new Error('Ошибка при удалении слова');
+                }
+                const updatedWords = this.words.filter((_, i) => i !== index);
+                this.setWords(updatedWords);
+
+                if (this.editingIndex === index) {
+                    this.setIsEditing(false);
+                }
+                console.log("Слово удалено:", JSON.parse(JSON.stringify(deletedWord)));
+            } catch (error) {
+                console.error("Ошибка:", error);
+            }
+        };
+
+        deleteWord();
+        
     }
 
     handleCancelEdit() {
@@ -168,10 +180,12 @@ class WordStore {
         }
     }
 
-    onDelete(index) {
+    onDelete = (index) => {
         const word = this.words[index];
-        if (word) {
-            this.deleteWord(word.id);
+        if (typeof word !== 'undefined') {
+            this.handleDeleteWord(index);
+        } else {
+            console.error("Удаляемое слово не найдено!");
         }
     }
 
