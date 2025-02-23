@@ -98,7 +98,7 @@ class WordStore {
             }
             const newWord = await response.json();
             this.setWords([...this.words, newWord]);
-            console.log("Новое слово добавлено:", newWord);
+            console.log("Новое слово добавлено:", JSON.parse(JSON.stringify(newWord)));
             this.setFormData({ english: '', transcription: '', russian: '', tags: '' });
         } catch (error) {
             console.error("Ошибка:", error);
@@ -120,7 +120,6 @@ class WordStore {
             }
             const updatedWord = await response.json();
             this.setWords(this.words.map(word => (word.id === id ? updatedWord : word)));
-            console.log("Изменения сохранены:", updatedWord);
             this.setFormData({ english: '', transcription: '', russian: '', tags: '' });
         } catch (error) {
             console.error("Ошибка:", error);
@@ -191,6 +190,12 @@ class WordStore {
 
     async onSubmit(e) {
         e.preventDefault();
+        if (this.validateFields()) {
+            this.setErrorMessage('Все поля должны быть заполнены!');
+            console.error('Все поля должны быть заполнены!');
+            return;
+        }
+        this.setErrorMessage('');
         if (this.isEditing && this.editingIndex !== null) {
             const word = this.words[this.editingIndex];
             await this.updateWord(word.id);
@@ -201,14 +206,18 @@ class WordStore {
 
     handleSubmit(event) {
         event.preventDefault();
+        
         if (this.validateFields()) {
-            this.setErrorMessage('Все поля должны быть заполнены!');
+            this.setErrorMessage('Пожалуйста, заполните все поля формы!');
+            console.error('Ошибка: Пожалуйста, заполните все поля формы!');
             return;
         }
         this.setErrorMessage('');
 
         if (this.isEditing && this.editingIndex !== null) {
-            this.updateWord(this.editingIndex);
+            const oldWord = this.words[this.editingIndex];
+            this.updateWord(oldWord.id);
+            console.log("Изменения сохранены:", { old: JSON.parse(JSON.stringify(oldWord)), new: JSON.parse(JSON.stringify(this.formData)) });
         } else {
             this.addWord();
         }
