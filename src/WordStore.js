@@ -130,14 +130,21 @@ class WordStore {
 
     async deleteWord(id) {
         try {
+            const deletedWord = this.words.find(word => word.id === id);
+            if (!deletedWord) {
+                console.error("Слово не найдено для удаления:", id);
+                return;
+            }
+    
             const response = await fetch(`http://itgirlschool.justmakeit.ru/api/words/${id}/delete`, {
                 method: 'POST',
             });
             if (!response.ok) {
                 throw new Error('Ошибка при удалении слова');
             }
+            
             this.setWords(this.words.filter(word => word.id !== id));
-            console.log("Слово удалено:", id);
+            console.log("Слово удалено:", deletedWord);
         } catch (error) {
             console.error("Ошибка:", error);
         }
